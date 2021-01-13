@@ -1,2 +1,1 @@
-templates.sketch filter=lfs diff=lfs merge=lfs -text
 remarkable-splashes[[:space:]].sketch filter=lfs diff=lfs merge=lfs -text
