@@ -1,7 +1,7 @@
 #!/bin/ruby
 
 CONFIG_FILE_NAME = "template-config.json"
-files = Dir["./template-images/*.png"]
+files = Dir["./template-templates/*.png"]
 puts "Building configuration for #{files.length} template images...\n\n"
 
 config_entries = []
