@@ -67,8 +67,9 @@ function usage {
   echo -e "-v\t\t\tDisplay version and exit"
   echo -e "-h\t\t\tDisplay usage and exit"
   echo -e "-d\t\t\tRun script in dry run mode, without ssh access to the device."
-  echo -e "-dc\t\t\Clean up previous dry runs."
+  echo -e "-dc\t\t\tClean up previous dry runs."
   echo -e "ip\t\t\tSSH address of the device (default set to 10.11.99.1)"
+  echo
 }
 
 # Attempt to make an ssh connection to the device.
