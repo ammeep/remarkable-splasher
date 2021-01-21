@@ -157,6 +157,7 @@ function reset_template_config {
   echo "$grn Success. $white Original template config restored"
 }
 
+# Enable dry run mode
 function switch_to_dry_run {
   echo
   echo "$cyn Dry Run: $white no ssh connection will be attempted to the device."
@@ -165,6 +166,13 @@ function switch_to_dry_run {
   echo "${indent}starting dry run..."
   echo
   DRY_RUN=true
+}
+
+# Remove all dry run artifacts
+function clean_up_dry_run {
+  if [ -d "$DRY_RUN_DIR" ]; then rm -Rf $DRY_RUN_DIR; fi
+  echo "$cyn Dry Run: $white clean up complete"
+  echo
 }
 
 echo
@@ -185,9 +193,7 @@ elif [[ "$1" == "-r" ]]; then
 elif [[ "$1" == "-d" ]]; then
   switch_to_dry_run
 elif [[ "$1" == "-dc" ]]; then
-  if [ -d "$DRY_RUN_DIR" ]; then rm -Rf $DRY_RUN_DIR; fi
-  echo "$cyn Dry Run: $white clean up complete"
-  echo
+  clean_up_dry_run
   exit -1
 elif [ "$#" -eq 1 ]; then
   SSH_ADDRESS="$1"
