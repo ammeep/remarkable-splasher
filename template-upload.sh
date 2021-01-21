@@ -93,22 +93,19 @@ function test_device_connection {
 # temporary json file with remarkable2 template json objects. This new 
 # file will be uploaded to the device, or copied to the dry run directory
 function generate_new_templates {
-  # Find template file names to sychronize
-  dirlist=(`ls ./templates/`)
-  echo "${indent}found ${#dirlist[@]} new templates"
-
-  # Build json objects for each template file
-  echo "${indent}building new template json configurations"
-
   TEMPLATES_JSON=`jq '.' ${TEMPLATE_NAME}`
-  for FILE in ${dirlist[*]}
-  do  
-    NAME=$(basename "${FILE%.*}")
+  for FILE in $LOCAL_TEMPLATE_DIR/*
+  do
+    FILENAME=$(basename "${FILE}")  
+    BASENAME=$(basename "${FILE%.*}")
+    IFS='|' read -r CATEGORY NAME <<< "$BASENAME"
+    NAME=`echo $NAME | xargs`
+    CATEGORY=`echo $CATEGORY | xargs`
     JSON="{
       name: \"$NAME\",
-      filename: \"$FILE\",
+      filename: \"$FILENAME\",
       iconCode: \"\\ue98c\",
-      categories: [\"Custom\"]
+      categories: [\"$CATEGORY\"]
     }"
     ITEM=".templates += [${JSON}]"
     TEMPLATES_JSON=`jq "$ITEM" <<< "${TEMPLATES_JSON}"`
@@ -201,5 +198,5 @@ generate_new_templates
 copy_new_templates
 clean_up
 echo
-echo "$grn Done!"
+echo "$grn Done! $white"
 echo
