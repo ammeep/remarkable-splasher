@@ -67,7 +67,7 @@ do
 
   if [[ "$input" =~ [yY] ]]; then
       echo "Compressing... "
-      pngquant --quality 0-1 "$FILE" -f -o "$FILE" # Max compression - it's an e-ink device after all
+      pngquant --quality 10-30 "$FILE" -f -o "$FILE"
       NEW_SIZE=`ls -lah "$FILE" | awk '{print $5}'`
       echo "Compressed file to $NEW_SIZE"
   fi  
