@@ -125,7 +125,7 @@ function copy_new_templates {
     if [[ "$input" =~ [yY] ]]; then
       echo
       echo "${indent}copying new templates to the device"
-      scp -r ./templates/ root@"$SSH_ADDRESS":/usr/share/remarkable/templates/
+      scp -r ./templates/* root@"$SSH_ADDRESS":/usr/share/remarkable/templates/
       scp ./new.json root@"$SSH_ADDRESS":/usr/share/remarkable/templates/${TEMPLATE_NAME}
     fi
   else 
