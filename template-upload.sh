@@ -95,14 +95,15 @@ function test_device_connection {
 function generate_new_templates {
   TEMPLATES_JSON=`jq '.' ${TEMPLATE_NAME}`
   for FILE in $LOCAL_TEMPLATE_DIR/*
-  do  
+  do
+    FILENAME=$(basename "${FILE}")  
     BASENAME=$(basename "${FILE%.*}")
     IFS='|' read -r CATEGORY NAME <<< "$BASENAME"
     NAME=`echo $NAME | xargs`
     CATEGORY=`echo $CATEGORY | xargs`
     JSON="{
       name: \"$NAME\",
-      filename: \"$FILE\",
+      filename: \"$FILENAME\",
       iconCode: \"\\ue98c\",
       categories: [\"$CATEGORY\"]
     }"
