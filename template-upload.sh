@@ -96,12 +96,14 @@ function generate_new_templates {
   TEMPLATES_JSON=`jq '.' ${TEMPLATE_NAME}`
   for FILE in $LOCAL_TEMPLATE_DIR/*
   do  
-    NAME=$(basename "${FILE%.*}")
+    BASENAME=$(basename "${FILE%.*}")
+    IFS='|' read -r CATEGORY NAME <<< "$BASENAME"
+    
     JSON="{
       name: \"$NAME\",
       filename: \"$FILE\",
       iconCode: \"\\ue98c\",
-      categories: [\"Custom\"]
+      categories: [\"$CATEGORY\"]
     }"
     ITEM=".templates += [${JSON}]"
     TEMPLATES_JSON=`jq "$ITEM" <<< "${TEMPLATES_JSON}"`
