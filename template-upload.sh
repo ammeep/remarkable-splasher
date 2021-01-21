@@ -98,7 +98,8 @@ function generate_new_templates {
   do  
     BASENAME=$(basename "${FILE%.*}")
     IFS='|' read -r CATEGORY NAME <<< "$BASENAME"
-    
+    NAME=`echo $NAME | xargs`
+    CATEGORY=`echo $CATEGORY | xargs`
     JSON="{
       name: \"$NAME\",
       filename: \"$FILE\",
@@ -196,5 +197,5 @@ generate_new_templates
 copy_new_templates
 clean_up
 echo
-echo "$grn Done!"
+echo "$grn Done! $white"
 echo
