@@ -108,7 +108,7 @@ function generate_new_templates {
       name: \"$NAME\",
       filename: \"$FILE\",
       iconCode: \"\\ue98c\",
-      categories: [\"Test\"]
+      categories: [\"Custom\"]
     }"
     ITEM=".templates += [${JSON}]"
     TEMPLATES_JSON=`jq "$ITEM" <<< "${TEMPLATES_JSON}"`
