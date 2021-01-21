@@ -30,21 +30,21 @@ SSH_ADDRESS="10.11.99.1"
 # The expected name of the templates json file to be pulled down, and 
 # uploaded to the Remarkable2 device.
 TEMPLATE_NAME="templates.json"
-
+# This directory is where we find out template images. These images are
+# organised in sub directories which represent the category which the 
+# template will apear under, on the device. 
+LOCAL_TEMPLATE_DIR="./templates"
 # When set to true only generate the new template.json file locally.
 # No ssh connection to the device will be made. This is useful when
 # needing to verify output of the script before making changes
 # to the device itself. 
 DRY_RUN=false
-
 # When running in dry run mode, output templates and configurations here.
 DRY_RUN_DIR="./dry-run"
-
-# This file will be used during execution to store the newly generated templates.json
-# file contents before it is copied to the device. This file is deleted after
-# the script is executed.
+# This file will be used during execution to store the newly generated 
+# templates.json file contents before it is copied to the device. This 
+# file is deleted after the script is executed.
 TEMP_FILE="new.json"
-
 # Colors and formatting to aid in clear script output
 red=$'\e[1;31m' # Error
 grn=$'\e[1;32m' # Device interaction
@@ -89,9 +89,9 @@ function test_device_connection {
   echo
 }
 
-# For all templates found in the ./templates directory, generate a new temporary json file
-# with remarkable2 template json objects. This new file will be uploaded to the device, or copied
-# to the dry run directory during a dry run
+# For all templates found in the ./templates directory, generate a new
+# temporary json file with remarkable2 template json objects. This new 
+# file will be uploaded to the device, or copied to the dry run directory
 function generate_new_templates {
   # Find template file names to sychronize
   dirlist=(`ls ./templates/`)
@@ -107,7 +107,7 @@ function generate_new_templates {
     JSON="{
       name: \"$NAME\",
       filename: \"$FILE\",
-      iconCode: \"\\ue9db\",
+      iconCode: \"\\ue98c\",
       categories: [\"Test\"]
     }"
     ITEM=".templates += [${JSON}]"
@@ -116,7 +116,8 @@ function generate_new_templates {
   echo $TEMPLATES_JSON | jq . > new.json
 }
 
-# Copy newly generated templates to the remarkable, or to the dry run directory.
+# Copy newly generated templates to the remarkable, or to the dry
+# run directory.
 function copy_new_templates {
   # test this scp to another directory on the remarkable first!!
   if [ "$DRY_RUN" = false ] ; then
@@ -133,11 +134,10 @@ function copy_new_templates {
     scp -r ./templates/ ${DRY_RUN_DIR}
     scp ./new.json ${DRY_RUN_DIR}/${TEMPLATE_NAME}
   fi
-
 }
 
-# Remove temporary templates config file, that was generated as an intermediary step
-# before the new config file is copied to the device.
+# Remove temporary templates config file, that was generated as an 
+# intermediary step before the new config file is copied to the device.
 function clean_up {
   echo "${indent}cleaning up"
   rm ${TEMP_FILE}
