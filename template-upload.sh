@@ -66,8 +66,9 @@ function usage {
   echo "Options:"
   echo -e "-v\t\t\tDisplay version and exit"
   echo -e "-h\t\t\tDisplay usage and exit"
-  echo -e "-d\t\t\tRun script in dry run mode, without ssh access to the device."
-  echo -e "-dc\t\t\tClean up previous dry runs."
+  echo -e "-d\t\t\tRun script in dry run mode, without ssh access to the device"
+  echo -e "-dc\t\t\tClean up previous dry runs"
+  echo -e "-r\t\t\tReset the templates.json file on the device"
   echo -e "ip\t\t\tSSH address of the device (default set to 10.11.99.1)"
   echo
 }
@@ -148,6 +149,14 @@ function clean_up {
   rm ${TEMP_FILE}
 }
 
+# Reset the device template.json file to it's original state.
+# Note: this does not remove old template images from disk.
+function reset_template_config {
+  echo "$grn Resetting template config file on the device$white"
+  scp ./templates.json root@"$SSH_ADDRESS":/usr/share/remarkable/templates/${TEMPLATE_NAME}
+  echo "$grn Success. $white Original template config restored"
+}
+
   echo
   echo "----------------------- Remarkable Splasher -----------------------"
   echo
@@ -158,6 +167,10 @@ if [ "$#" -gt 1 ] || [[ "$1" == "-h" ]]; then
   exit -1
 elif [[ "$1" == "-v" ]]; then
   echo "template-upload version: $VERSION"
+  exit -1
+elif [[ "$1" == "-r" ]]; then
+  test_device_connection 
+  reset_template_config
   exit -1
 elif [[ "$1" == "-d" ]]; then
   echo
