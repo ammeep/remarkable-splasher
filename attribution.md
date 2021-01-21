@@ -16,3 +16,4 @@ See [licensing information on unsplash](https://unsplash.com/license) for more i
 |[space-title.png](./template-images/space-title.png)| [@bubo](https://unsplash.com/@bubo)  | 
 |[tree-fog.png](./template-images/tree-fog.png)|[@marekpiwnicki](https://unsplash.com/@marekpiwnicki)|
 |[City Aerial](./template-images/Covers&#32;\|&#32;City&#32;Aerial.png)|[@pipeaguileram](https://unsplash.com/@pipeaguileram)|
+|[Empire](./template-images/Covers&#32;\|&#32;Empire.png)|[@osmanrana](https://unsplash.com/@osmanrana)|
