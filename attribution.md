@@ -19,3 +19,4 @@ See [licensing information on unsplash](https://unsplash.com/license) for more i
 |[Empire](./template-images/Covers&#32;\|&#32;Empire.png)|[@osmanrana](https://unsplash.com/@osmanrana)|
 |[Golden Gate](./template-images/Covers&#32;\|&#32;Golden&#32;Gate.png)|[@aabergkvist](https://unsplash.com/@aabergkvist)|
 |[Stove](./template-images/Covers&#32;\|&#32;Stove.png)|[@jagi22](https://unsplash.com/@jagi22)|
+|[Ladder](./template-images/Covers&#32;\|&#32;Ladder.png)|[@segvra](https://unsplash.com/@segvra)|
