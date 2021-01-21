@@ -104,18 +104,12 @@ function generate_new_templates {
   for FILE in ${dirlist[*]}
   do  
     NAME=$(basename "${FILE%.*}")
-    FILE_NAME=$FILE
-    ICON_CODE="\ue9db"
-    LANDSCAPE=false
-    CATEGORIES=["Title Pages"]
-
-    JSON=$( jq -n \
-                      --arg tn "$NAME" \
-                      --arg fn "$FILE_NAME" \
-                      --arg ic "$ICON_CODE" \
-                      --arg ls "$LANDSCAPE" \
-                      --arg ct "$CATEGORIES" \
-                      '{name: $tn, filename: $fn, iconCode: $ic, landscape: $ls, categories: $ct}' )
+    JSON="{
+      name: \"$NAME\",
+      filename: \"$FILE\",
+      iconCode: \"\\ue9db\",
+      categories: [\"Test\"]
+    }"
     ITEM=".templates += [${JSON}]"
     TEMPLATES_JSON=`jq "$ITEM" <<< "${TEMPLATES_JSON}"`
   done
