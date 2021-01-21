@@ -15,3 +15,4 @@ See [licensing information on unsplash](https://unsplash.com/license) for more i
 |[paper-reems.png](./template-images/paper-reems.png)|[@jjying](https://unsplash.com/@jjying)| 
 |[space-title.png](./template-images/space-title.png)| [@bubo](https://unsplash.com/@bubo)  | 
 |[tree-fog.png](./template-images/tree-fog.png)|[@marekpiwnicki](https://unsplash.com/@marekpiwnicki)|
+|[City Aerial](./template-images/Covers&#32;\|&#32;City&#32;Aerial.png)|[@pipeaguileram](https://unsplash.com/@pipeaguileram)|
