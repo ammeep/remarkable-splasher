@@ -157,9 +157,19 @@ function reset_template_config {
   echo "$grn Success. $white Original template config restored"
 }
 
+function switch_to_dry_run {
   echo
-  echo "----------------------- Remarkable Splasher -----------------------"
+  echo "$cyn Dry Run: $white no ssh connection will be attempted to the device."
+  echo "${indent}templates and configuration will be copied to disk (${DRY_RUN_DIR}) for verification"
   echo
+  echo "${indent}starting dry run..."
+  echo
+  DRY_RUN=true
+}
+
+echo
+echo "----------------------- Remarkable Splasher -----------------------"
+echo
 
 # Check Arguments
 if [ "$#" -gt 1 ] || [[ "$1" == "-h" ]]; then
@@ -173,13 +183,7 @@ elif [[ "$1" == "-r" ]]; then
   reset_template_config
   exit -1
 elif [[ "$1" == "-d" ]]; then
-  echo
-  echo "$cyn Dry Run: $white no ssh connection will be attempted to the device."
-  echo "${indent}templates and configuration will be copied to disk (${DRY_RUN_DIR}) for verification"
-  echo
-  echo "${indent}starting dry run..."
-  echo
-  DRY_RUN=true
+  switch_to_dry_run
 elif [[ "$1" == "-dc" ]]; then
   if [ -d "$DRY_RUN_DIR" ]; then rm -Rf $DRY_RUN_DIR; fi
   echo "$cyn Dry Run: $white clean up complete"
