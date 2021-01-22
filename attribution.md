@@ -22,3 +22,4 @@ See [licensing information on unsplash](https://unsplash.com/license) for more i
 |[Ladder](./template-images/Covers&#32;\|&#32;Ladder.png)|[@segvra](https://unsplash.com/@segvra)|
 |[BLM](./template-images/Covers&#32;\|&#32;BLM.png)|[@pollsa](https://unsplash.com/@pollsa)|
 |[Touring](./template-images/Covers&#32;\|&#32;Touring.png)|[@giacbrd](https://unsplash.com/@giacbrd)|
+|[Pala Group](./template-images/Covers&#32;\|&#32;Pala&#32;Group.png)|[@giacbrd](https://unsplash.com/@giacbrd)|
