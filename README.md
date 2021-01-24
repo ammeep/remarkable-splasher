@@ -18,7 +18,7 @@ Upload template images to the device
 
 Copy custom tempates to the device
 
-`template-compress.sh [-v | -h ]`
+`rm2-compress [-v | -h ]`
 
 Storage is at a premium on the remarkable2 device. Use this script to
 compress images in the `./templates` directory before uploading them to the device.
