@@ -36,7 +36,9 @@ trap 'exit_failed' ERR
 # Display the usage options for this script
 
 function usage {
-  echo "Usage: template-compress.sh [-v | -h ]"
+  echo "Usage: rm2-compress [-v | -h ]"
+  echo
+  echo "When no flags are provided, script will prompt for compression."
   echo
   echo "Options:"
   echo -e "-v\t\t\tDisplay version and exit"
@@ -44,17 +46,12 @@ function usage {
   echo
 }
 
-
-echo
-echo "----------------------- Remarkable Template Compressor -----------------------"
-echo
-
 # Check Arguments
 if [ "$#" -gt 1 ] || [[ "$1" == "-h" ]]; then
   usage
   exit -1
 elif [[ "$1" == "-v" ]]; then
-  echo "template-compressor version: $VERSION"
+  echo "rm2-compress version: $VERSION"
   exit -1
 fi
 
