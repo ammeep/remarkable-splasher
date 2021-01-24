@@ -16,16 +16,13 @@ Upload template images to the device
 
 `Usage:rm2-templates [-v | -h ]`
 
-Utility script to provide maximum image compression. Large template file sizes consume valuable storage on the device. Space is at a premium, and image compression is advised.
+Copy custom tempates to the device
 
 `template-compress.sh [-v | -h ]`
 
 Storage is at a premium on the remarkable2 device. Use this script to
 compress images in the `./templates` directory before uploading them to the device.
 
-`template-upload.sh [-v | -h | ssh address]`
-
-Copy templates found in the `./templates` directory to the remarkable device. A restart is required for the templates to take effect.
 ## Adding Templates
 
 Add new template files to the `rm2-splashes.sketch` file. Ensure [dimensions](https://remarkablewiki.com/tips/templates) are correct. Compress images before adding to this file. 
