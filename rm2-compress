@@ -64,7 +64,7 @@ do
 
   if [[ "$input" =~ [yY] ]]; then
       echo "Compressing... "
-      pngquant --quality 10-30 "$FILE" -f -o "$FILE"
+      pngquant --quality 1-10 "$FILE" -f -o "$FILE"
       NEW_SIZE=`ls -lah "$FILE" | awk '{print $5}'`
       echo "Compressed file to $NEW_SIZE"
   fi  
