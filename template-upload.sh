@@ -156,7 +156,7 @@ function reset_template_config {
 # Enable dry run mode
 function switch_to_dry_run {
   echo
-  echo "$cyn Dry Run: $white no ssh connection will be attempted to the device."
+  echo "$cyn Dry Run: $white no ssh connection will be attempted"
   echo "${indent}templates & config will be copied locally"
   echo "${indent}verify for expected output: ${DRY_RUN_DIR}"
   echo
