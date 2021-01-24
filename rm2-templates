@@ -65,8 +65,14 @@ function exit_failed {
 trap 'exit_failed' ERR
 # Display the usage options for this script
 function usage {
-  echo "Usage: template-upload.sh [-v | -h | ssh address]"
+  echo "Usage: rm2-templates [-v | -h | ssh address]"
   echo
+  echo "Upload template files to the reMarkable2 device"
+  echo "Templates for upload must be placed in the ./templates dir"
+  echo "This script will not yet preserve existing custom templates"
+  echo 
+  echo "For more, see https://github.com/ammeep/remarkable-splashes"
+  echo  
   echo "Options:"
   echo -e "-v\t\t\tDisplay version and exit"
   echo -e "-h\t\t\tDisplay usage and exit"
