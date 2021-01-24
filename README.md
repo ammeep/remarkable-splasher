@@ -10,6 +10,9 @@ Remarkable Spashes utility script that allows for the management and upload of t
 - jq
 - ssh
 - pngquant
+
+For ssh setup help see [the reMarkableWiki](https://remarkablewiki.com/tech/ssh)
+
 ## Usage
 
 Upload template images to the device
@@ -34,6 +37,7 @@ Export `.pngs` and optionally `.svg` to the project `./templates` directory.
 Copy from the device your existing `templates.json`. Place it in this directory, replacing the existing file in the repository. Add an attribution in the [attributions](attribution.md) file
 ## Preserving Existing Custom Templates
 This script will not preserve any of your existing installed custom templates. However, can preserve these templates with some additional work. Built in support for this may come in the future.
+
 ## Troubleshooting
 
 See [here](https://remarkablewiki.com/tips/templates) for further troubleshooting 
