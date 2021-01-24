@@ -20,16 +20,20 @@
 # Dependencies  : ssh, nc, jq
 
 # Notations     : This script performs uni-directional synchronisation of
-#                 new templates
+#                 new templates. This script has only been tested on the
+#                 reMarkable2. Use with caution and back up your device
+#                 prior to using.
 
 # Current version (MAJOR.MINOR)
 VERSION="1.0"
 # Remarkable2 SSH Address. The device must be plugged in to the machine and
 # turned on.
 SSH_ADDRESS="10.11.99.1"
+# This is the location of all template files on the reMarkable2 device
+TEMPLATE_DIRECTORY="/usr/share/remarkable/templates/"
 # The expected name of the templates json file to be pulled down, and 
 # uploaded to the Remarkable2 device.
-TEMPLATE_NAME="templates.json"
+CONFIG_FILE="templates.json"
 # This directory is where we find out template images. These images are
 # organised in sub directories which represent the category which the 
 # template will apear under, on the device. 
@@ -66,7 +70,7 @@ function usage {
   echo "Options:"
   echo -e "-v\t\t\tDisplay version and exit"
   echo -e "-h\t\t\tDisplay usage and exit"
-  echo -e "-d\t\t\tRun script in dry run mode, without ssh access to the device"
+  echo -e "-d\t\t\tRun in dry run mode, without ssh access to the device"
   echo -e "-dc\t\t\tClean up previous dry runs"
   echo -e "-r\t\t\tReset the templates.json file on the device"
   echo -e "ip\t\t\tSSH address of the device (default set to 10.11.99.1)"
@@ -76,7 +80,8 @@ function usage {
 # Attempt to make an ssh connection to the device.
 # If the device is not plugged in, or ssh fails, exit.
 function test_device_connection {
-  echo "$grn Attempting to establish connection with the device...$white"
+  echo "$grn Attempting to the reMarkable2...$white"
+  echo "ensure your device is on and plugged in"
   ssh -q root@"$SSH_ADDRESS" exit
 
   if [ "$?" -ne 0 ]; then
@@ -85,7 +90,7 @@ function test_device_connection {
   fi
   echo
   echo "${indent}established an ssh connection to ${SSH_ADDRESS}"
-  echo "${indent}please do not lock your device until the script has completed!"
+  echo "${indent}do not lock your device until the script has completed!"
   echo
 }
 
@@ -93,7 +98,7 @@ function test_device_connection {
 # temporary json file with remarkable2 template json objects. This new 
 # file will be uploaded to the device, or copied to the dry run directory
 function generate_new_templates {
-  TEMPLATES_JSON=`jq '.' ${TEMPLATE_NAME}`
+  TEMPLATES_JSON=`jq '.' ${CONFIG_FILE}`
   for FILE in $LOCAL_TEMPLATE_DIR/*
   do
     FILENAME=$(basename "${FILE}")  
@@ -123,13 +128,13 @@ function copy_new_templates {
     if [[ "$input" =~ [yY] ]]; then
       echo
       echo "${indent}copying new templates to the device"
-      scp -r ./templates/* root@"$SSH_ADDRESS":/usr/share/remarkable/templates/
-      scp ./new.json root@"$SSH_ADDRESS":/usr/share/remarkable/templates/${TEMPLATE_NAME}
+      scp -r $LOCAL_TEMPLATE_DIR/* root@"$SSH_ADDRESS":$TEMPLATE_DIRECTORY
+      scp ./new.json root@"$SSH_ADDRESS":/$TEMPLATE_DIRECTORY${CONFIG_FILE}
     fi
   else 
     echo "${indent}copying new templates to ${DRY_RUN_DIR}"
-    scp -r ./templates/ ${DRY_RUN_DIR}
-    scp ./new.json ${DRY_RUN_DIR}/${TEMPLATE_NAME}
+    scp -r ${LOCAL_TEMPLATE_DIR}/ ${DRY_RUN_DIR}
+    scp ./new.json ${DRY_RUN_DIR}/${CONFIG_FILE}
   fi
 }
 
@@ -144,7 +149,7 @@ function clean_up {
 # Note: this does not remove old template images from disk.
 function reset_template_config {
   echo "$grn Resetting template config file on the device$white"
-  scp ./templates.json root@"$SSH_ADDRESS":/usr/share/remarkable/templates/${TEMPLATE_NAME}
+  scp ./${CONFIG_FILE} root@"$SSH_ADDRESS":${$TEMPLATE_DIRECTORY}${CONFIG_FILE}
   echo "$grn Success. $white Original template config restored"
 }
 
@@ -152,7 +157,8 @@ function reset_template_config {
 function switch_to_dry_run {
   echo
   echo "$cyn Dry Run: $white no ssh connection will be attempted to the device."
-  echo "${indent}templates and configuration will be copied to disk (${DRY_RUN_DIR}) for verification"
+  echo "${indent}templates & config will be copied locally"
+  echo "${indent}verify for expected output: ${DRY_RUN_DIR}"
   echo
   echo "${indent}starting dry run..."
   echo
@@ -161,14 +167,11 @@ function switch_to_dry_run {
 
 # Remove all dry run artifacts
 function clean_up_dry_run {
+  echo 
   if [ -d "$DRY_RUN_DIR" ]; then rm -Rf $DRY_RUN_DIR; fi
   echo "$cyn Dry Run: $white clean up complete"
   echo
 }
-
-echo
-echo "----------------------- Remarkable Splasher -----------------------"
-echo
 
 # Check Arguments
 if [ "$#" -gt 1 ] || [[ "$1" == "-h" ]]; then
@@ -197,6 +200,7 @@ fi
 generate_new_templates
 copy_new_templates
 clean_up
+
 echo
 echo "$grn Done! $white"
 echo
