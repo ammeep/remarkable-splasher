@@ -13,9 +13,13 @@ Remarkable Spashes utility script that allows for the management and upload of t
 
 ## Usage
 
-`Usage: template-compress.sh [-v | -h ]`
+Upload template images to the device
 
-`Usage: template-upload.sh [-v | -h | ssh address]`
+`Usage:rm2-templates [-v | -h ]`
+
+Utility script to provide maximum image compression. Large template file sizes consume valuable storage on the device. Space is at a premium, and image compression is advised.
+
+`Usage: rm2-compress [-v | -h | ssh address]`
 
 ## Adding Templates
 
