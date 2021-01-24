@@ -115,7 +115,7 @@ function generate_new_templates {
     JSON="{
       name: \"$NAME\",
       filename: \"$FILENAME\",
-      iconCode: \"\\ue98c\",
+      iconCode: \"\\ue9d5\",
       categories: [\"$CATEGORY\"]
     }"
     ITEM=".templates += [${JSON}]"
