@@ -23,7 +23,7 @@ Utility script to provide maximum image compression. Large template file sizes c
 
 ## Adding Templates
 
-Add new template files to the `remarkable-splashes.sketch` file. Ensure [dimensions](https://remarkablewiki.com/tips/templates) are correct
+Add new template files to the `remarkable-splashes.sketch` file. Ensure [dimensions](https://remarkablewiki.com/tips/templates) are correct. Compress images before adding to this file. 
 
 Each template file is a new page. Name the page and the canvas following the convention `{Category} | {Name}`. `{Category}` is the name of the category that this template will appear under on the device. `{Name}` is the template name on the device.
 
