@@ -13,9 +13,14 @@ Remarkable Spashes utility script that allows for the management and upload of t
 
 ## Usage
 
-`Usage: template-compress.sh [-v | -h ]`
+`template-compress.sh [-v | -h ]`
 
-`Usage: template-upload.sh [-v | -h | ssh address]`
+Storage is at a premium on the remarkable2 device. Use this script to
+compress images in the `./templates` directory before uploading them to the device.
+
+`template-upload.sh [-v | -h | ssh address]`
+
+Copy templates found in the `./templates` directory to the remarkable device. A restart is required for the templates to take effect.
 
 ## Adding Templates
 
@@ -24,6 +29,8 @@ Add new template files to the `remarkable-splashes.sketch` file. Ensure [dimensi
 Each template file is a new page. Name the page and the canvas following the convention `{Category} | {Name}`. `{Category}` is the name of the category that this template will appear under on the device. `{Name}` is the template name on the device.
 
 Export `.pngs` and optionally `.svg` to the project `./templates` directory.
+
+Add an attribution in the [attributions](attribution.md) file
 
 ## Troubleshooting
 
