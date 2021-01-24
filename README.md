@@ -1,4 +1,4 @@
-# Remarkable Splashes
+# Remarkable Splasher
 
 **These scripts are to be used at your own risk, and come with no gaurenttees. Back up your device before running, and know how to restore the back up. It's possible that this script could brick your device. Use with caution**
 
@@ -28,7 +28,7 @@ compress images in the `./templates` directory before uploading them to the devi
 Copy templates found in the `./templates` directory to the remarkable device. A restart is required for the templates to take effect.
 ## Adding Templates
 
-Add new template files to the `remarkable-splashes.sketch` file. Ensure [dimensions](https://remarkablewiki.com/tips/templates) are correct. Compress images before adding to this file. 
+Add new template files to the `rm2-splashes.sketch` file. Ensure [dimensions](https://remarkablewiki.com/tips/templates) are correct. Compress images before adding to this file. 
 
 Each template file is a new page. Name the page and the canvas following the convention `{Category} | {Name}`. `{Category}` is the name of the category that this template will appear under on the device. `{Name}` is the template name on the device.
 
