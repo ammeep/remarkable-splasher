@@ -118,10 +118,10 @@ function generate_new_templates {
   echo $TEMPLATES_JSON | jq . > new.json
 }
 
-# Copy newly generated templates to the remarkable, or to the dry
+# Copy newly generated templates to the reMarkable2, or to the dry
 # run directory.
 function copy_new_templates {
-  # test this scp to another directory on the remarkable first!!
+  # test this scp to another directory on the reMarkable2 first!!
   if [ "$DRY_RUN" = false ] ; then
   echo
     read -rp "$grn Upload new templates [y/N]: $white" input
