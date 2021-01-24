@@ -71,7 +71,7 @@ function usage {
   echo "Templates for upload must be placed in the ./templates dir"
   echo "This script will not yet preserve existing custom templates"
   echo 
-  echo "For more, see https://github.com/ammeep/remarkable-splashes"
+  echo "For more, see https://github.com/ammeep/remarkable-splasher"
   echo  
   echo "Options:"
   echo -e "-v\t\t\tDisplay version and exit"
