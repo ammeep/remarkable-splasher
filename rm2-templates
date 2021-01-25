@@ -33,7 +33,7 @@ SSH_ADDRESS="10.11.99.1"
 TEMPLATE_DIRECTORY="/usr/share/remarkable/templates/"
 # The expected name of the templates json file to be pulled down, and 
 # uploaded to the Remarkable2 device.
-CONFIG_FILE="templates.json"
+CONFIG_FILE="./source/templates.json"
 # This directory is where we find out template images. These images are
 # organised in sub directories which represent the category which the 
 # template will apear under, on the device. 
