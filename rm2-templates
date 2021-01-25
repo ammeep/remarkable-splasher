@@ -83,7 +83,7 @@ function usage {
 # If the device is not plugged in, or ssh fails, exit.
 function test_device_connection {
   echo "$grn Attempting to the reMarkable2...$white"
-  echo "ensure your device is on and plugged in"
+  echo "${indent}ensure your device is on and plugged in"
   ssh -q root@"$SSH_ADDRESS" exit
 
   if [ "$?" -ne 0 ]; then
