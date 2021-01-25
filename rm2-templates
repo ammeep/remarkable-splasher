@@ -138,7 +138,7 @@ function copy_new_templates {
     if [[ "$input" =~ [yY] ]]; then
       echo
       echo "${indent}copying new templates to the device"
-      scp -r .temp root@"$SSH_ADDRESS":$TEMPLATE_DIRECTORY
+      scp -r ./temp/* root@"$SSH_ADDRESS":$TEMPLATE_DIRECTORY
     fi
   else 
     echo "${indent}copying new templates to ${DRY_RUN_DIR}"
