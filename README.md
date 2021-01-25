@@ -28,13 +28,14 @@ compress images in the `./templates` directory before uploading them to the devi
 
 ## Adding Templates
 
-Add new template files to the `rm2-splashes.sketch` file. Ensure [dimensions](https://remarkablewiki.com/tips/templates) are correct. Compress images before adding to this file. 
+Add new template files to the `./source/rm2-splashes.sketch` file. Ensure [dimensions](https://remarkablewiki.com/tips/templates) are correct. Compress images before adding to this file. 
 
 Each template file is a new page. Name the page and the canvas following the convention `{Category} | {Name}`. `{Category}` is the name of the category that this template will appear under on the device. `{Name}` is the template name on the device.
 
 Export `.pngs` and optionally `.svg` to the project `./templates` directory.
 
-Copy from the device your existing `templates.json`. Place it in this directory, replacing the existing file in the repository. Add an attribution in the [attributions](attribution.md) file
+Copy from the device your existing `./source/templates.json`. Place it in this directory, replacing the existing file in the repository. Add an attribution in the [attributions](attribution.md) file
+
 ## Preserving Existing Custom Templates
 This script will not preserve any of your existing installed custom templates. However, can preserve these templates with some additional work. Built in support for this may come in the future.
 
