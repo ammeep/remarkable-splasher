@@ -145,6 +145,15 @@ function copy_new_templates {
   fi
 }
 
+# Force a restart of xochitl in order to reload the templates
+# without needing to restart the device
+function restart_xochitl {
+  if [ "$DRY_RUN" = false ] ; then
+    ssh root@"$SSH_ADDRESS" 'systemctl restart xochitl'
+    echo "${indent}restarted xochitl - new templates should be ready to use"
+  fi
+}
+
 # Remove temporary templates config file, that was generated as an 
 # intermediary step before the new config file is copied to the device.
 function clean_up {
@@ -207,6 +216,7 @@ fi
 create_temp_dir
 generate_new_templates
 copy_new_templates
+restart_xochitl
 clean_up
 
 echo
