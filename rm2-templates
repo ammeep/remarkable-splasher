@@ -105,13 +105,13 @@ function test_device_connection {
 # file will be uploaded to the device, or copied to the dry run directory
 function generate_new_templates {
   TEMPLATES_JSON=`jq '.' ${CONFIG_FILE}`
-  for FILE in $LOCAL_TEMPLATE_DIR/*
+  TEMPLATE_FILES=`find ${LOCAL_TEMPLATE_DIR} -name '*.png' -or -name '*.svg'`
+  for FILE in $TEMPLATE_FILES
   do
+    NAME=$(basename "${FILE%.*}")
     FILENAME=$(basename "${FILE}")  
-    BASENAME=$(basename "${FILE%.*}")
-    IFS='|' read -r CATEGORY NAME <<< "$BASENAME"
-    NAME=`echo $NAME | xargs`
-    CATEGORY=`echo $CATEGORY | xargs`
+    CATEGORY="$(basename "$(dirname "$FILE")")"
+
     JSON="{
       name: \"$NAME\",
       filename: \"$FILENAME\",
@@ -123,6 +123,9 @@ function generate_new_templates {
   done
   echo $TEMPLATES_JSON | jq . > new.json
 }
+
+#find ./templates -name '*.png' -or -name '*.svg'
+
 
 # Copy newly generated templates to the reMarkable2, or to the dry
 # run directory.
