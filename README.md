@@ -17,7 +17,7 @@ For ssh setup help see [the reMarkableWiki](https://remarkablewiki.com/tech/ssh)
 
 Upload template images to the device
 
-`Usage:rm2-templates [-v | -h ]`
+`rm2-templates [-v | -h ]`
 
 Copy custom tempates to the device
 
