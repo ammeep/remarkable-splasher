@@ -17,7 +17,7 @@
 
 # Description   : Copy template images to the remarkable2 device.
 
-# Dependencies  : ssh, nc, jq
+# Dependencies  : ssh, nc, jq, sed
 
 # Notations     : This script performs uni-directional synchronisation of
 #                 new templates. This script has only been tested on the
@@ -45,10 +45,6 @@ LOCAL_TEMPLATE_DIR="./templates"
 DRY_RUN=false
 # When running in dry run mode, output templates and configurations here.
 DRY_RUN_DIR="./dry-run"
-# This file will be used during execution to store the newly generated 
-# templates.json file contents before it is copied to the device. This 
-# file is deleted after the script is executed.
-TEMP_FILE="new.json"
 # Colors and formatting to aid in clear script output
 red=$'\e[1;31m' # Error
 grn=$'\e[1;32m' # Device interaction
@@ -100,32 +96,37 @@ function test_device_connection {
   echo
 }
 
+function create_temp_dir {
+  mkdir -p temp
+}
+
 # For all templates found in the ./templates directory, generate a new
 # temporary json file with remarkable2 template json objects. This new 
 # file will be uploaded to the device, or copied to the dry run directory
 function generate_new_templates {
   TEMPLATES_JSON=`jq '.' ${CONFIG_FILE}`
-  TEMPLATE_FILES=`find ${LOCAL_TEMPLATE_DIR} -name '*.png' -or -name '*.svg'`
-  for FILE in $TEMPLATE_FILES
+  while read FILE
   do
     NAME=$(basename "${FILE%.*}")
     FILENAME=$(basename "${FILE}")  
     CATEGORY="$(basename "$(dirname "$FILE")")"
-
+    if [[ "$CATEGORY" == "templates" ]]; then CATEGORY="Custom"; fi
+    CATEGORY="$(tr '[:lower:]' '[:upper:]' <<< ${CATEGORY:0:1})${CATEGORY:1}"
     JSON="{
       name: \"$NAME\",
       filename: \"$FILENAME\",
       iconCode: \"\\ue9d5\",
       categories: [\"$CATEGORY\"]
     }"
+
     ITEM=".templates += [${JSON}]"
     TEMPLATES_JSON=`jq "$ITEM" <<< "${TEMPLATES_JSON}"`
-  done
-  echo $TEMPLATES_JSON | jq . > new.json
+    
+    scp "$FILE" ./temp
+  done < <(find ${LOCAL_TEMPLATE_DIR} -name '*.png' -or -name '*.svg')
+
+  echo $TEMPLATES_JSON | jq . > ./temp/templates.json
 }
-
-#find ./templates -name '*.png' -or -name '*.svg'
-
 
 # Copy newly generated templates to the reMarkable2, or to the dry
 # run directory.
@@ -137,13 +138,11 @@ function copy_new_templates {
     if [[ "$input" =~ [yY] ]]; then
       echo
       echo "${indent}copying new templates to the device"
-      scp -r $LOCAL_TEMPLATE_DIR/* root@"$SSH_ADDRESS":$TEMPLATE_DIRECTORY
-      scp ./new.json root@"$SSH_ADDRESS":/$TEMPLATE_DIRECTORY${CONFIG_FILE}
+      scp -r .temp root@"$SSH_ADDRESS":$TEMPLATE_DIRECTORY
     fi
   else 
     echo "${indent}copying new templates to ${DRY_RUN_DIR}"
-    scp -r ${LOCAL_TEMPLATE_DIR}/ ${DRY_RUN_DIR}
-    scp ./new.json ${DRY_RUN_DIR}/${CONFIG_FILE}
+    scp -r ./temp ${DRY_RUN_DIR}
   fi
 }
 
@@ -151,7 +150,7 @@ function copy_new_templates {
 # intermediary step before the new config file is copied to the device.
 function clean_up {
   echo "${indent}cleaning up"
-  rm ${TEMP_FILE}
+  if [ -d "./temp" ]; then rm -Rf "./temp"; fi
 }
 
 # Reset the device template.json file to it's original state.
@@ -206,6 +205,7 @@ if [ "$DRY_RUN" = false ] ; then
     test_device_connection   
 fi
 
+create_temp_dir
 generate_new_templates
 copy_new_templates
 clean_up
