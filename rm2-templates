@@ -108,13 +108,12 @@ function generate_new_templates {
   while read FILE
   do
     NAME=$(basename "${FILE%.*}")
-    FILENAME=$(basename "${FILE}")  
     CATEGORY="$(basename "$(dirname "$FILE")")"
     if [[ "$CATEGORY" == "templates" ]]; then CATEGORY="Custom"; fi
     CATEGORY="$(tr '[:lower:]' '[:upper:]' <<< ${CATEGORY:0:1})${CATEGORY:1}"
     JSON="{
       name: \"$NAME\",
-      filename: \"$FILENAME\",
+      filename: \"$NAME\",
       iconCode: \"\\ue9d5\",
       categories: [\"$CATEGORY\"]
     }"
