@@ -47,10 +47,8 @@ DRY_RUN=false
 DRY_RUN_DIR="./dry-run"
 # Colors and formatting to aid in clear script output
 red=$'\e[1;31m' # Error
-grn=$'\e[1;32m' # Device interaction
-cyn=$'\e[1;36m' # Dry Run
+grn=$'\e[1;32m' # Device interaction or key message 
 white=$'\e[0m'  # Everything else
-indent="           " #Indent 5 tabs
 
 # Kills SSH session and exits with return 1
 function exit_failed {
@@ -82,18 +80,19 @@ function usage {
 # Attempt to make an ssh connection to the device.
 # If the device is not plugged in, or ssh fails, exit.
 function test_device_connection {
-  echo "$grn Attempting to the reMarkable2...$white"
-  echo "ensure your device is on and plugged in"
+  echo $grn 
+  echo "Attempting to connect to the reMarkable2...$white"
+  echo "Ensure your device is on and plugged in"
   ssh -q root@"$SSH_ADDRESS" exit
 
   if [ "$?" -ne 0 ]; then
-    echo "$red Failed to establish connection $white"
+    echo $red 
+    echo "Failed to establish connection $white"
     exit -1
   fi
   echo
-  echo "${indent}established an ssh connection to ${SSH_ADDRESS}"
-  echo "${indent}do not lock your device until the script has completed!"
-  echo
+  echo "Established an ssh connection to ${SSH_ADDRESS}"
+  echo "Do not lock your device until the script has completed!"
 }
 
 function create_temp_dir {
@@ -132,15 +131,18 @@ function generate_new_templates {
 function copy_new_templates {
   # test this scp to another directory on the reMarkable2 first!!
   if [ "$DRY_RUN" = false ] ; then
-  echo
-    read -rp "$grn Upload new templates [y/N]: $white" input
+    echo $grn 
+    read -rp "Upload new templates [y/N]: $white" input
     if [[ "$input" =~ [yY] ]]; then
       echo
-      echo "${indent}copying new templates to the device"
+      echo "Copying new templates to the device"
+      echo
       scp -r ./temp/* root@"$SSH_ADDRESS":$TEMPLATE_DIRECTORY
+      echo
     fi
-  else 
-    echo "${indent}copying new templates to ${DRY_RUN_DIR}"
+  else
+    echo  
+    echo "Copying new templates to ${DRY_RUN_DIR}"
     scp -r ./temp ${DRY_RUN_DIR}
   fi
 }
@@ -149,34 +151,38 @@ function copy_new_templates {
 # without needing to restart the device
 function restart_xochitl {
   if [ "$DRY_RUN" = false ] ; then
+    echo "Restartin xochitl"
     ssh root@"$SSH_ADDRESS" 'systemctl restart xochitl'
-    echo "${indent}restarted xochitl - new templates should be ready to use"
   fi
 }
 
 # Remove temporary templates config file, that was generated as an 
 # intermediary step before the new config file is copied to the device.
 function clean_up {
-  echo "${indent}cleaning up"
+  echo "Cleaning up"
   if [ -d "./temp" ]; then rm -Rf "./temp"; fi
 }
 
 # Reset the device template.json file to it's original state.
 # Note: this does not remove old template images from disk.
 function reset_template_config {
-  echo "$grn Resetting template config file on the device$white"
+  echo $grn 
+  echo "Resetting template config file on the device$white"
   scp ./${CONFIG_FILE} root@"$SSH_ADDRESS":${$TEMPLATE_DIRECTORY}${CONFIG_FILE}
-  echo "$grn Success. $white Original template config restored"
+  echo $grn
+  echo "Success $white Original template config restored"
 }
 
 # Enable dry run mode
 function switch_to_dry_run {
+  echo $grn
+  echo "Dry Run $white"
   echo
-  echo "$cyn Dry Run: $white no ssh connection will be attempted"
-  echo "${indent}templates & config will be copied locally"
-  echo "${indent}verify for expected output: ${DRY_RUN_DIR}"
+  echo "No ssh connection will be attempted"
+  echo "Templates & config will be copied locally"
+  echo "Verify for expected output: ${DRY_RUN_DIR}"
   echo
-  echo "${indent}starting dry run..."
+  echo "Starting dry run..."
   echo
   DRY_RUN=true
 }
@@ -213,12 +219,13 @@ if [ "$DRY_RUN" = false ] ; then
     test_device_connection   
 fi
 
+
 create_temp_dir
 generate_new_templates
 copy_new_templates
 restart_xochitl
 clean_up
 
-echo
-echo "$grn Done! $white"
+echo $grn 
+echo "Done! $white"
 echo
